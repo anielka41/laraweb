@@ -2,69 +2,81 @@
 
 @section('content')
     @include('helpers.flash-massages')
-
-    <div class="main">
-        <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle"> <i class="hamburger align-self-center"></i> </a>
-
-            <div class="navbar-collapse collapse">
-                <ul class="navbar-nav navbar-align">
-                    <li class="nav-item dropdown">
-
-                    @guest
-                        @if (Route::has('login'))
-
-                                <a class="text-muted" href="{{ route('login') }}">{{ __('Login') }}</a>
-
-                        @endif
-
-                        @if (Route::has('register'))
-
-                                <a class="text-muted" href="{{ route('register') }}">{{ __('Register') }}</a>
-
-                        @endif
-                    @else
-
-                        <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-                            <i class="align-middle" data-feather="settings"></i>
-                        </a>
-                        <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                            <span class="text-dark">{{ Auth::user()->name }}</span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="pages-profile.html">
-                                <i class="bi bi-person-fill me-1"></i> Profil
-                            </a>
-
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="bi bi-box-arrow-left me-1"></i> {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
+    <main class="content">
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="h3 mb-3"><strong>Panel</strong> LaraWeb</h1>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid p-0 mt-3">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card border-0 bg-success text-white">
+                        <div class="card-body py-0">
+                            <div class="d-flex flex-wrap align-items-center">
+                                <i class="bi display-3 bi-people-fill me-3"></i>
+                                <div>
+                                    <div class="fs-3 fw-bold">Użytkownicy</div>
+                                    <div class="fs-5">Łącznie: {{ $userCount }}</div>
+                                </div>
+                            </div>
                         </div>
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </nav>
-
-        <main class="content">
-            <div class="container-fluid p-0">
-                <h1 class="h3 mb-3"><strong>Panel</strong> LaraWeb</h1>
-            </div>
-        </main>
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row text-muted">
-                    <div class="col-6 text-start">
-                        <p class="mb-0">
-                            <strong>{{ config('app.name', 'Laravel') }} {{ __('Dashboard') }}</strong> &copy; </p>
                     </div>
                 </div>
             </div>
-        </footer>
-    </div>
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header"><h4>Nowi użytkownicy</h4></div>
+                        <div class="card-body">
+                            <div class="bootstrap-table">
+                                <div class="fixed-table-toolbar"></div>
+
+                                <div class="fixed-table-container" style="padding-bottom: 0">
+                                    <div class="fixed-table-header" style="display: none;">
+                                        <table></table>
+                                    </div>
+                                    <div class="fixed-table-body">
+                                        <table class="table table-bordered table-hover" id="users-table">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 5%;" data-field="0">
+                                                    <div class="th-inner ">#</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th style="" data-field="name">
+                                                    <div class="th-inner ">Nazwa użytkownika</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                                <th style="text-align: center; width: 30%; " data-field="created">
+                                                    <div class="th-inner ">Data rejestracji</div>
+                                                    <div class="fht-cell"></div>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($users as $user)
+                                                <tr data-index="{{ $user->id }}">
+                                                    <td style="width: 5%; ">{{ $user->id }}</td>
+                                                    <td style="">
+                                                        <a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a>
+                                                    </td>
+                                                    <td style="text-align: center; width: 30%; ">{{ $user->created_at }}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 @endsection

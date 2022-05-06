@@ -1,5 +1,7 @@
 require('./bootstrap');
+window.Swal = require('sweetalert2');
 window.$ = window.jQuery = require('jquery');
+
 // AdminKit (required)
 // import "./modules/bootstrap";
 import "./modules/sidebar";

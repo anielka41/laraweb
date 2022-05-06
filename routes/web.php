@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function () {return view('welcome');});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // (Dashboard) URI: admin
+    Route::get('/admin', [HomeController::class, 'index'])->name('admin');
+
+    // (Users) URI: admin/users
+    Route::prefix('admin')->group(function () {
+        Route::resource('users', UserController::class)->names('users');
+    });
+
 });
 
-Auth::routes();
 
-Route::get('/admin', [HomeController::class, 'index'])->name('admin')->middleware('auth');
+Auth::routes(['verify' => true]);
