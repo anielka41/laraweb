@@ -3,7 +3,11 @@
 @section('content')
     <main class="content">
         <div class="container-fluid p-0">
-            <h1 class="h3 mb-4"><strong>Użytkownicy</strong></h1>
+            <div class="d-flex justify-content-between">
+                <h1 class="h3 mb-4"><strong>Użytkownicy</strong></h1>
+                <div><p class="h3"><strong>Łącznie: {{ $userCount }}</strong></p></div>
+            </div>
+
         </div>
 
         <div class="table-responsive">
@@ -51,20 +55,20 @@
                                     </td>
                                     <td style="text-align: left">
                                         <div class="font-weight-bold">
-                                            <a href="{{ route('users.show', $user->id) }}"><strong>{{ $user->name }}</strong></a>
+                                            <a href="{{ route('users.show', $user->slug) }}"><strong>{{ $user->name }}</strong></a>
                                         </div>
                                     </td>
                                     <td style="text-align: center; width: 18%;">
                                         <ul class="list-inline mb-0 list-actions mt-1">
                                             <li class="list-inline-item">
-                                                <a href="{{ route('users.show', $user->id) }}" class="jw-table-row" data-id="{{ $user->id }}">
+                                                <a href="{{ route('users.show', $user->slug) }}" class="jw-table-row" data-id="{{ $user->id }}">
                                                     <button type="button" class="btn btn-info btn-sm">
                                                         <i class="bi bi-eye"></i> Zobacz
                                                     </button>
                                                 </a>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a href="{{ route('users.edit', $user->id) }}" class="jw-table-row" data-id="{{ $user->id }}">
+                                                <a href="{{ route('users.edit', $user->slug) }}" class="jw-table-row" data-id="{{ $user->id }}">
                                                     <button type="button" class="btn btn-warning btn-sm">
                                                         <i class="bi bi-pencil-square"></i> Edytuj
                                                     </button>

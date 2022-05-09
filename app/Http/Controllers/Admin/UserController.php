@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Auth;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,8 +23,12 @@ class UserController extends Controller
      */
     public function index(): Application|Factory|View
     {
+        $userCount = User::count();
+
         return view('users.index', [
-            'users' => User::paginate(10)
+            'users' => User::paginate(10),
+            'userCount' => $userCount,
+            'userAuth' => Auth::user()->slug
         ]);
     }
 
@@ -51,26 +56,28 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $user
+     * @param User $user
      * @return View
      */
     public function show(User $user): View
     {
         return view('users.show', [
-            'user' => $user
+            'user' => $user,
+            'userAuth' => Auth::user()->slug
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $user
+     * @param User $user
      * @return View
      */
     public function edit(User $user): View
     {
         return view('users.edit', [
             'user' => $user,
+            'userAuth' => Auth::user()->slug
         ]);
     }
 
@@ -89,10 +96,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $user
+     * @param int $id
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy($id): JsonResponse
     {
         try {
 //            throw new Exception();

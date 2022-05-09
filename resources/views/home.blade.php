@@ -61,7 +61,7 @@
                                                 <tr data-index="{{ $user->id }}">
                                                     <td style="width: 5%; ">{{ $user->id }}</td>
                                                     <td style="">
-                                                        <a href="{{ route('users.show', $user->id) }}">{{ $user->name }}</a>
+                                                        <a href="{{ route('users.show', $user->slug) }}">{{ $user->name }}</a>
                                                     </td>
                                                     <td style="text-align: center; width: 30%; ">{{ $user->created_at }}</td>
                                                 </tr>

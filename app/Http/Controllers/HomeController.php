@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,6 +27,9 @@ class HomeController extends Controller
     {
         $users = User::orderBy('id', 'DESC')->limit(10)->get();
         $userCount = User::count();
-        return view('home', compact('userCount', 'users'));
+        $userAuth = Auth::user()->slug;
+        return view('home', compact('userCount', 'users', 'userAuth'));
     }
+
+    
 }

@@ -19,7 +19,7 @@
 <body>
 <div id="app">
     <div class="wrapper">
-        @guest
+        @if(auth()->guest())
         @else
             <nav id="sidebar" class="sidebar js-sidebar">
                 <div class="sidebar-content">
@@ -71,7 +71,7 @@
                                                     <span class="align-middle">Dodaj nowego</span> </a>
                                             </li>
                                             <li class="sidebar-item">
-                                                <a class="sidebar-link" href="{{ route('users.edit', $user = Auth::user()) }}">
+                                                <a class="sidebar-link" href="{{ route('users.edit', $userAuth) }}">
                                                     <span class="align-middle">Profil</span> </a>
                                             </li>
                                         </ul>
@@ -79,12 +79,11 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </nav>
-        @endguest
+        @endif
+
         <div class="main">
             <nav class="navbar navbar-expand navbar-light navbar-bg">
                 <a class="sidebar-toggle js-sidebar-toggle"> <i class="hamburger align-self-center"></i> </a>
@@ -113,9 +112,11 @@
                                     <span class="text-dark">{{ Auth::user()->name }}</span> </a>
 
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="pages-profile.html">
+                                    @if(auth()->guest())
+                                    @else
+                                    <a class="dropdown-item" href="{{ route('users.edit', $userAuth) }}">
                                         <i class="bi bi-person-fill me-1"></i> Profil </a>
-
+                                    @endif
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="bi bi-box-arrow-left me-1"></i> {{ __('Logout') }}
@@ -124,6 +125,7 @@
                                         @csrf
                                     </form>
                                 </div>
+
                         </li>
                         @endguest
                     </ul>
